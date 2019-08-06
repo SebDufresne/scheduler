@@ -131,11 +131,43 @@ storiesOf("InterviewerList", module)
     />
   ));
   
+  const appointments = {
+    time:"12pm",
+    student:"Lydia Miller-Jones",
+    interviewer: { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
 
+  };
 
   storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />);
+  .add("Header", () =>
+    <Appointment
+      time={appointments.time}
+    />)
+  .add("Empty", () =>
+    <Appointment
+      mode="EMPTY"
+      onAdd={action("onAdd")}
+    />)
+  .add("Show", () =>
+    <Appointment
+      mode="SHOW"
+      student={appointments.student}
+      interviewer={appointments.interviewer}
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+    />)
+  .add("Confirm", () =>
+    <Appointment
+      mode="CONFIRM"
+      onCancel={action("onCancel")}
+      onConfirm={action("onConfirm")}
+      message="Delete the Appointment?"
+    />)
+  .add("Saving", () => <Appointment time="12pm" />)
+  .add("Deleting", () => <Appointment time="12pm" />)
+  .add("Error Saving", () => <Appointment time="12pm" />)
+  .add("Error Deleting", () => <Appointment time="12pm" />);
