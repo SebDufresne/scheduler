@@ -14,6 +14,12 @@ import InterviewerList from "components/InterviewerList";
 import InterviewerListItem from "components/InterviewerListItem";
 
 import Appointment from "components/Appointment";
+import Confirm from "components/Appointment/Confirm";
+import Empty from "components/Appointment/Empty";
+import Error from "components/Appointment/Error";
+import Header from "components/Appointment/Header";
+import Show from "components/Appointment/Show";
+import Status from "components/Appointment/Status";
 
 storiesOf("Button", module)
   .addParameters({
@@ -144,16 +150,16 @@ storiesOf("InterviewerList", module)
   })
   .add("Appointment", () => <Appointment />)
   .add("Header", () =>
-    <Appointment
+    <Header
       time={appointments.time}
     />)
   .add("Empty", () =>
-    <Appointment
+    <Empty
       mode="EMPTY"
       onAdd={action("onAdd")}
     />)
   .add("Show", () =>
-    <Appointment
+    <Show
       mode="SHOW"
       student={appointments.student}
       interviewer={appointments.interviewer}
@@ -161,13 +167,26 @@ storiesOf("InterviewerList", module)
       onDelete={action("onDelete")}
     />)
   .add("Confirm", () =>
-    <Appointment
-      mode="CONFIRM"
+    <Confirm
       onCancel={action("onCancel")}
       onConfirm={action("onConfirm")}
       message="Delete the Appointment?"
     />)
-  .add("Saving", () => <Appointment time="12pm" />)
-  .add("Deleting", () => <Appointment time="12pm" />)
-  .add("Error Saving", () => <Appointment time="12pm" />)
-  .add("Error Deleting", () => <Appointment time="12pm" />);
+  .add("Saving", () =>
+    <Status 
+      message="Saving"
+    />)
+  .add("Deleting", () =>
+    <Status
+      message="Deleting"
+    />)
+  .add("Error Saving", () =>
+    <Error
+      message="Could not save appointment."
+      onClose={action("onClose")}
+    />)
+  .add("Error Deleting", () =>
+    <Error
+      message="Could not delete appointment."
+      onClose={action("onClose")}
+    />);
