@@ -11,6 +11,20 @@ const getAppointmentsForDay = (state,day) => {
   return appointment;
 }
 
+
+const getInterview = (state, interview) => {
+  console.log(state);
+  if (!interview) {
+    return null;
+  } else {
+    const student = interview.student;
+    const interviewer = state.interviewers[interview.interviewer];
+    const interviewObj = {student, interviewer};
+    return interviewObj;
+  }
+}
+
 module.exports = {
-  getAppointmentsForDay
+  getAppointmentsForDay,
+  getInterview
 };
