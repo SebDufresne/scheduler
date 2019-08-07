@@ -13,7 +13,6 @@ const getAppointmentsForDay = (state,day) => {
 
 
 const getInterview = (state, interview) => {
-  console.log(state);
   if (!interview) {
     return null;
   } else {
