@@ -1,11 +1,11 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 
 export default function useVisualMode(value) {
   const [mode, setMode] = useState(value);
   const [history, setHistory] = useState([]);
 
-  function transition(valueTo, skip) {
-    if (!skip) {
+  function transition(valueTo, skipPrevious) {
+    if (!skipPrevious) {
       setHistory([...history, mode]);
     }
     setMode(valueTo);
