@@ -1,90 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import "components/Application.scss";
 
 import Appointment from "components/Appointment/index";
 import DayList from "components/DayList";
 
-import { getAppointmentsForDay, getInterviewersForDay ,getInterview } from "../helpers/selectors";
+import useApplicationData from 'hooks/useApplicationData';
 
-const axios = require('axios');
+import { getAppointmentsForDay, getInterviewersForDay ,getInterview } from "../helpers/selectors";
 
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
-  const setDay = day => setState(prev => ({ ...prev, day }));
-
-  useEffect(() => {
-    const days = axios.get(`http://localhost:3001/api/days`);
-    const appointments = axios.get(`http://localhost:3001/api/appointments`);
-    const interviewers = axios.get(`http://localhost:3001/api/interviewers`);
-    Promise.all([days,appointments,interviewers])
-    .then(([days, appointments, interviewers]) => 
-      setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data}))
-    )
-  }, []);
-  
-  function bookInterview(id, interview) {
-    return axios.put(`http://localhost:3001/api/appointments/${id}`, {interview})
-    .then(() => {
-      const appointment = {
-        ...state.appointments[id],
-        interview: { ...interview }
-      };
-      
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-        setState({
-          ...state,
-          appointments
-        })
-      });
-  }
-
-  function cancelInterview(id) {
-    return axios.delete(`http://localhost:3001/api/appointments/${id}`)
-    .then(() => {
-      const appointment = {
-        ...state.appointments[id],
-        interview: null
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-        setState({
-          ...state,
-          appointments
-        })
-      });        
-  }
-
-  const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
-  const schedule = appointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
 
-    return (
-      <Appointment
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={interview}
-        interviewers={interviewers}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />
-    );
-  });
-  
+  const appointments = getAppointmentsForDay(state, state.day).map(
+    appointment => {
+      return (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={interviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      );
+    }
+  );
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -94,23 +44,20 @@ export default function Application(props) {
           alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
-        <DayList
-          days={state.days}
-          day={state.day}
-          setDay = {day => setDay(day)}
-        />
-        <nav className="sidebar__menu" />
-
+        <nav className="sidebar__menu">
+          <DayList days={state.days} day={state.day} setDay={setDay} />
+        </nav>
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
           alt="Lighthouse Labs"
         />
-
       </section>
       <section className="schedule">
-        {schedule}
-        <Appointment key="last" time="5pm" />
+        <section className="schedule">
+          {appointments}
+          <Appointment key="last" time="5pm" />
+        </section>
       </section>
     </main>
   );
