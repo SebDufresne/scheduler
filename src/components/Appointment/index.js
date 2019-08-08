@@ -41,7 +41,7 @@ export default function Appointment(props) {
                 <Confirm
                     onCancel={() => transition(SHOW)}
                     onConfirm={() => {
-                        transition(DELETE,true)
+                        transition(DELETE)
                         props.cancelInterview(props.id)
                         .then(() => transition(EMPTY))
                         .catch(() => {
@@ -55,7 +55,7 @@ export default function Appointment(props) {
                 <Form
                     interviewers={props.interviewers}
                     onSave={(name, interviewer) => {
-                        transition(SAVE,true)
+                        transition(SAVE)
                         props.bookInterview(props.id,save(name,interviewer))
                         .then(() => transition(SHOW))
                         .catch(() => {
@@ -113,7 +113,7 @@ export default function Appointment(props) {
                     student={props.interview.student}
                     interviewer={props.interview.interviewer}
                     onEdit={() => transition(EDIT)}
-                    onDelete={() => transition(CONFIRM,true)}
+                    onDelete={() => transition(CONFIRM)}
                 />
             )}
         </article>

@@ -2,13 +2,13 @@ import { useState } from "react";
 
 export default function useVisualMode(value) {
   const [mode, setMode] = useState(value);
-  const [history, setHistory] = useState([value]);
+  const [history, setHistory] = useState([]);
 
   function transition(valueTo, skipPrevious) {
-    setMode(valueTo);
     if (!skipPrevious) {
-      setHistory([...history, valueTo]);
+      setHistory([...history, mode]);
     }
+    setMode(valueTo);
   }
 
   function back() {
@@ -16,8 +16,6 @@ export default function useVisualMode(value) {
       const hist = [...history];
       setMode(hist.pop());
       setHistory(hist);
-    } else {
-      setMode(history[0]);
     }
   }
 
