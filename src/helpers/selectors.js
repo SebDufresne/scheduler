@@ -32,6 +32,7 @@ const getInterviewersForDay = (state,day) => {
 //   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 // ];
 
+// Rertuns an object like: {student, interviewer};
 const getInterview = (state, interview) => {
   if (!interview) {
     return null;

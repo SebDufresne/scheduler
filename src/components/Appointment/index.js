@@ -59,6 +59,18 @@ export default function Appointment(props) {
                 message="Deleting"
                 />
             )}
+            {mode === EDIT && (
+                <Form
+                    name={props.interview.student}
+                    interviewer={props.interview.interviewer.id}
+                    interviewers={props.interviewers}
+                    onSave={(name, interviewer) => {
+                        transition(SAVE)
+                        props.bookInterview(props.id,save(name,interviewer)).then(() => transition(SHOW));
+                }   }
+                    onCancel={() => transition(SHOW)}
+                />
+            )}
             {mode === EMPTY && (
                 <Empty         
                     onAdd={() => transition(CREATE)}
