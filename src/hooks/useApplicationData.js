@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
+
+import { reducer,
+  SET_APPLICATION_DATA,
+  SET_DAY,
+  SET_INTERVIEW } from "reducers/application";
 
 const axios = require('axios');
 
 export default function useApplicationData() {
 
-  const [state, setState] = useState({
+  const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
 
-  const setDay = day => setState(prev => ({ ...prev, day }));
+  const setDay = day => dispatch({ type: SET_DAY, day });
 
   useEffect(() => {
     const days = axios.get(`http://localhost:3001/api/days`);
@@ -19,49 +24,26 @@ export default function useApplicationData() {
     const interviewers = axios.get(`http://localhost:3001/api/interviewers`);
     Promise.all([days,appointments,interviewers])
     .then(([days, appointments, interviewers]) => 
-      setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data}))
+      dispatch({ type: SET_APPLICATION_DATA, days: days.data, appointments: appointments.data, interviewers: interviewers.data })
     )
   }, []);
 
-  const bookInterview = function(id, interview) {
+  const bookInterview = function(id, dayName, interview) {
     return axios.put(`http://localhost:3001/api/appointments/${id}`, {interview})
     .then(() => {
-      const appointment = {
-        ...state.appointments[id],
-        interview: { ...interview }
-      };
-      
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-        setState({
-          ...state,
-          appointments
-        })
-      });
+      dispatch({ type: SET_INTERVIEW, id, dayName, interview });
+    });
   };
 
-  const cancelInterview = function(id) {
+  const cancelInterview = function(id, dayName) {
     return axios.delete(`http://localhost:3001/api/appointments/${id}`)
     .then(() => {
-      const appointment = {
-        ...state.appointments[id],
-        interview: null
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-        setState({
-          ...state,
-          appointments
-        })
-      });        
+      dispatch({ type: SET_INTERVIEW, id, dayName, interview: null });
+    });        
   };
-
-  return {state,
-    setDay,
-    bookInterview,
-    cancelInterview};
+  
+  return {bookInterview,
+    cancelInterview,
+    state,
+    setDay};
 }

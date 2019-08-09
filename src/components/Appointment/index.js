@@ -26,7 +26,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
+  function genInterview(name, interviewer) {
     const interview = {
       student: name,
       interviewer
@@ -43,7 +43,7 @@ export default function Appointment(props) {
           onConfirm={() => {
             transition(DELETING,true);
             props
-              .cancelInterview(props.id)
+              .cancelInterview(props.id, props.day)
               .then(() => transition(EMPTY))
               .catch(() => {
                 transition(ERROR_DELETE, true);
@@ -58,7 +58,7 @@ export default function Appointment(props) {
           onSave={(name, interviewer) => {
             transition(SAVING);
             props
-              .bookInterview(props.id, save(name, interviewer))
+              .bookInterview(props.id, props.day, genInterview(name, interviewer))
               .then(() => transition(SHOW))
               .catch(() => {
                 transition(ERROR_SAVE, true);
@@ -76,7 +76,7 @@ export default function Appointment(props) {
           onSave={(name, interviewer) => {
             transition(SAVING);
             props
-              .bookInterview(props.id, save(name, interviewer))
+              .bookInterview(props.id, props.day, genInterview(name, interviewer))
               .then(() => transition(SHOW))
               .catch(() => {
                 transition(ERROR_SAVE, true);
