@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import Button from '../Button';
 import InterviewerList from '../InterviewerList';
 
 export default function Form(props) {
   const { interviewers, onCancel, onSave } = props;
 
-  const [name, setName] = useState(props.name || "");
+  const [name, setName] = useState(props.name || '');
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   function reset() {
-    setName("");
+    setName('');
     setInterviewer(null);
     onCancel();
   }
@@ -23,7 +23,7 @@ export default function Form(props) {
             type="text"
             value={name}
             placeholder="Enter Student Name"
-            onChange={(event) => setName(event.target.value)}
+            onChange={event => setName(event.target.value)}
           />
         </form>
         <InterviewerList
@@ -33,11 +33,20 @@ export default function Form(props) {
         />
       </section>
       <section className="appointment__card-right">
-          <section className="appointment__actions">
-            <Button danger onClick={reset}>Cancel</Button>
-            <Button confirm onClick={(e) => {onSave(name, interviewer)}} >Save</Button>
-          </section>
+        <section className="appointment__actions">
+          <Button danger onClick={reset}>
+            Cancel
+          </Button>
+          <Button
+            confirm
+            onClick={e => {
+              onSave(name, interviewer);
+            }}
+          >
+            Save
+          </Button>
         </section>
-      </main>
-    );
+      </section>
+    </main>
+  );
 }

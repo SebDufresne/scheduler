@@ -1,16 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import "components/Application.scss";
+import 'components/Application.scss';
 
-import Appointment from "components/Appointment/index";
-import DayList from "components/DayList";
+import Appointment from 'components/Appointment/index';
+import DayList from 'components/DayList';
 
 import useApplicationData from 'hooks/useApplicationData';
 
-import { getAppointmentsForDay, getInterviewersForDay, getInterview, getSpotsForDay  } from "../helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterviewersForDay,
+  getInterview,
+  getSpotsForDay
+} from '../helpers/selectors';
 
 export default function Application() {
-
   const {
     state,
     setDay,
@@ -44,7 +48,13 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} selectedDay={state.day} setDay={setDay} appointments={state.appointments} getSpotsForDay={getSpotsForDay} />
+          <DayList
+            days={state.days}
+            selectedDay={state.day}
+            setDay={setDay}
+            appointments={state.appointments}
+            getSpotsForDay={getSpotsForDay}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
