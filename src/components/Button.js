@@ -1,23 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import "components/Button.scss";
+import 'components/Button.scss';
 
 const classNames = require('classnames');
 
 export default function Button(props) {
-   const buttonClass = classNames("button", {
-     "button--danger": props.danger,
-     "button--confirm": props.confirm
-   });
- 
-   return (
-     <button
-       className={buttonClass}
-       onClick={props.onClick}
-       disabled={props.disabled}
-     >
-       {props.children}
-     </button>
-   );
- }
- 
+  const { danger, confirm, onClick, disabled, children } = props;
+
+  const buttonClass = classNames('button', {
+    'button--confirm': confirm,
+    'button--danger': danger
+  });
+
+  return (
+    <button className={buttonClass} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
+}

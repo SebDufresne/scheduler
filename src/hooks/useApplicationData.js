@@ -7,6 +7,8 @@ import { reducer,
 
 const axios = require('axios');
 
+const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
 export default function useApplicationData() {
 
   const [state, dispatch] = useReducer(reducer, {
@@ -26,21 +28,27 @@ export default function useApplicationData() {
     .then(([days, appointments, interviewers]) => 
       dispatch({ type: SET_APPLICATION_DATA, days: days.data, appointments: appointments.data, interviewers: interviewers.data })
     )
+
   }, []);
 
-  const bookInterview = function(id, dayName, interview) {
+  const bookInterview = function(id, interview) {
     return axios.put(`http://localhost:3001/api/appointments/${id}`, {interview})
     .then(() => {
-      dispatch({ type: SET_INTERVIEW, id, dayName, interview });
+      dispatch({ type: SET_INTERVIEW, id, interview });
     });
   };
 
-  const cancelInterview = function(id, dayName) {
+  const cancelInterview = function(id) {
     return axios.delete(`http://localhost:3001/api/appointments/${id}`)
     .then(() => {
-      dispatch({ type: SET_INTERVIEW, id, dayName, interview: null });
+      dispatch({ type: SET_INTERVIEW, id, interview: null });
     });        
   };
+
+  socket.onmessage = function (event) {
+    const {type, id, interview} = JSON.parse(event.data);
+    dispatch({ type, id, interview });
+  }
   
   return {bookInterview,
     cancelInterview,

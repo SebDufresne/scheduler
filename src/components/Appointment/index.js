@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './styles.scss';
 import Confirm from './Confirm';
@@ -34,6 +34,15 @@ export default function Appointment(props) {
     return interview;
   }
 
+  useEffect(() => {
+    if (props.interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+   }, [props.interview, transition, mode]);   
+
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -43,7 +52,7 @@ export default function Appointment(props) {
           onConfirm={() => {
             transition(DELETING,true);
             props
-              .cancelInterview(props.id, props.day)
+              .cancelInterview(props.id)
               .then(() => transition(EMPTY))
               .catch(() => {
                 transition(ERROR_DELETE, true);
@@ -58,7 +67,7 @@ export default function Appointment(props) {
           onSave={(name, interviewer) => {
             transition(SAVING);
             props
-              .bookInterview(props.id, props.day, genInterview(name, interviewer))
+              .bookInterview(props.id, genInterview(name, interviewer))
               .then(() => transition(SHOW))
               .catch(() => {
                 transition(ERROR_SAVE, true);
@@ -76,7 +85,7 @@ export default function Appointment(props) {
           onSave={(name, interviewer) => {
             transition(SAVING);
             props
-              .bookInterview(props.id, props.day, genInterview(name, interviewer))
+              .bookInterview(props.id, genInterview(name, interviewer))
               .then(() => transition(SHOW))
               .catch(() => {
                 transition(ERROR_SAVE, true);
@@ -85,7 +94,8 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === EMPTY &&
+          <Empty onAdd={() => transition(CREATE)} />}
       {mode === ERROR_DELETE && (
         <Error message="Could not delete appointment." onClose={() => back()} />
       )}

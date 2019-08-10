@@ -1,4 +1,4 @@
-const getAppointmentsForDay = (state,day) => {
+export const getAppointmentsForDay = (state,day) => {
   const appointmentsId = state.days
       .filter((e) => e.name === day)
       .map((e) => e.appointments)
@@ -10,9 +10,9 @@ const getAppointmentsForDay = (state,day) => {
   })
 
   return appointment;
-}
+};
 
-const getInterviewersForDay = (state,day) => {
+export const getInterviewersForDay = (state,day) => {
   const interviewersId = state.days.filter((e) => e.name === day)
             .map((e) => e.interviewers)
             .reduce((acc, val) => acc.concat(val), []);
@@ -24,10 +24,12 @@ const getInterviewersForDay = (state,day) => {
   })
 
   return interviewers;
-}
+};
 
-// Rertuns an object like: {student, interviewer};
-const getInterview = (state, interview) => {
+
+
+// Returns an object like: {student, interviewer};
+export const getInterview = (state, interview) => {
   if (!interview) {
     return null;
   } else {
@@ -36,10 +38,22 @@ const getInterview = (state, interview) => {
     const interviewObj = {student, interviewer};
     return interviewObj;
   }
-}
+};
 
-module.exports = {
-  getAppointmentsForDay,
-  getInterviewersForDay,
-  getInterview
+// Called getSpotsForDay(state, day.name)
+export const getSpotsForDay = (appointments, days, day) => {
+  const targetDay = days.find((e) => e.name === day);
+  const appointmentList = [...targetDay.appointments];
+  const appointmentsSpread = {...appointments};
+
+  const number = Object.values(appointmentsSpread).reduce((total, appointment) => {
+    if(appointmentList.includes(appointment.id)) {
+      if (appointment.interview) {
+        return total + 1;
+      }
+    }
+    return total;
+  }, 0);
+
+  return 5 - number;
 };

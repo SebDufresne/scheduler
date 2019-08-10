@@ -7,9 +7,9 @@ import DayList from "components/DayList";
 
 import useApplicationData from 'hooks/useApplicationData';
 
-import { getAppointmentsForDay, getInterviewersForDay ,getInterview } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay, getInterview, getSpotsForDay  } from "../helpers/selectors";
 
-export default function Application(props) {
+export default function Application() {
 
   const {
     state,
@@ -26,7 +26,6 @@ export default function Application(props) {
         <Appointment
           key={appointment.id}
           {...appointment}
-          day={state.day}
           interview={getInterview(state, appointment.interview)}
           interviewers={interviewers}
           bookInterview={bookInterview}
@@ -35,7 +34,6 @@ export default function Application(props) {
       );
     }
   );
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -46,7 +44,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} day={state.day} setDay={setDay} />
+          <DayList days={state.days} selectedDay={state.day} setDay={setDay} appointments={state.appointments} getSpotsForDay={getSpotsForDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
