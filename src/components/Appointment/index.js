@@ -13,11 +13,11 @@ import useVisualMode from 'hooks/useVisualMode';
 
 export default function Appointment(props) {
   const {
-    interview,
-    id,
-    interviewers,
     bookInterview,
     cancelInterview,
+    id,
+    interview,
+    interviewers,
     time
   } = props;
 

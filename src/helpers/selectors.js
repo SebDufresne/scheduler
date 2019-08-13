@@ -41,9 +41,8 @@ export const getInterview = (state, interview) => {
   }
 };
 
-// Returns the number of spots left (!! MAX is hardcoded !!)
+// Returns the number of spots taken
 export const getSpotsForDay = (appointments, days, day) => {
-  const MAX_SPOTS = 5;
   const targetDay = days.find(e => e.name === day);
   const appointmentList = [...targetDay.appointments];
   const appointmentsSpread = { ...appointments };
@@ -60,5 +59,5 @@ export const getSpotsForDay = (appointments, days, day) => {
     0
   );
 
-  return MAX_SPOTS - filledSpots;
+  return filledSpots;
 };

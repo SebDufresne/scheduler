@@ -25,9 +25,19 @@ export default function useApplicationData() {
   // Retrieves days, appointments and interviewers from API
   // sends the info to dispatch to update the state
   useEffect(() => {
-    const days = axios.get(`http://localhost:3001/api/days`);
-    const appointments = axios.get(`http://localhost:3001/api/appointments`);
-    const interviewers = axios.get(`http://localhost:3001/api/interviewers`);
+    const source = axios.CancelToken.source();
+    const days = axios.get(`/api/days`, {
+      proxy: { host: 'localhost', port: 3001 },
+      cancelToken: source.token,
+    });
+    const appointments = axios.get(`/api/appointments`, {
+      proxy: { host: 'localhost', port: 3001 },
+      cancelToken: source.token,
+    });
+    const interviewers = axios.get(`/api/interviewers`, {
+      proxy: { host: 'localhost', port: 3001 },
+      cancelToken: source.token,
+    });
     Promise.all([days, appointments, interviewers]).then(
       ([days, appointments, interviewers]) =>
         dispatch({
@@ -36,7 +46,11 @@ export default function useApplicationData() {
           appointments: appointments.data,
           interviewers: interviewers.data
         })
-    );
+    )
+    // .cath((e) => console.log("HEY ERRROR!!!!"));
+    return () => {
+      source.cancel('Request canceled');
+    };
   }, []);
 
   // Sends new appointment request to API
@@ -70,6 +84,7 @@ export default function useApplicationData() {
         return dispatch(data);
       }
     };
+    return () => socket.close();
   }, []);
 
   return { bookInterview, cancelInterview, state, setDay };
