@@ -140,11 +140,11 @@ test("getInterviewersForDay returns an empty array when the day is not found", (
 
 test("getSpotsForDay returns 1", () => {
   const result = getSpotsForDay(state.appointments, state.days, "Monday");
-  expect(result).toEqual(1);
+  expect(result).toEqual(2);
 });
 
 test("getSpotsForDay returns 2", () => {
   const result = getSpotsForDay(state.appointments, state.days, "Tuesday");
-  expect(result).toEqual(2);
+  expect(result).toEqual(0);
 });
 

@@ -55,7 +55,7 @@ export default function Appointment(props) {
 
   // Outputs one Appointment
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={time} />
       {mode === CONFIRM && (
         <Confirm
@@ -68,7 +68,7 @@ export default function Appointment(props) {
                 transition(ERROR_DELETE, true);
               });
           }}
-          message="Delete the Appointment?"
+          message="Are you sure you would like to delete?"
         />
       )}
       {mode === CREATE && (

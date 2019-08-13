@@ -45,6 +45,8 @@ export const getInterview = (state, interview) => {
 export const getSpotsForDay = (appointments, days, day) => {
   const targetDay = days.find(e => e.name === day);
   const appointmentList = [...targetDay.appointments];
+  const availableSpots = appointmentList.length;
+
   const appointmentsSpread = { ...appointments };
 
   const filledSpots = Object.values(appointmentsSpread).reduce(
@@ -59,5 +61,5 @@ export const getSpotsForDay = (appointments, days, day) => {
     0
   );
 
-  return filledSpots;
+  return availableSpots - filledSpots;
 };
