@@ -1,26 +1,39 @@
-# TinyApp Project
+# Scheduler Project
 
-TinyApp is a full stack web application built with Node and Express that allows users to shorten long URLs (à la bit.ly).
+React scheduler with up to five appointments per day. The information will be synced over multiple clients with the help of Web Sockets.
 
 ## Final Product
 
-### Login Page
+### Opening page
 
-User authentication.
+Landing page, with up to five appointments per day and dynamic counter for the remaining spots.
+
+!["opening page"](https://github.com/SebDufresne/scheduler/blob/master/docs/main-view.png)
+
+### Creating a new appointment
+
+Allows the creation (or edition) of an appointment, by entering the name and selecting the interviewer.
+
+!["create new appointment"](https://github.com/SebDufresne/scheduler/blob/master/docs/add-appointment.png)
+
+### Contextual warnings
+
+Warns the user if name field was left empty.
+
+!["contextual error"](https://github.com/SebDufresne/scheduler/blob/master/docs/contextual-errors.png)
+
+
+
+
 
 !["screen capture of login menu"](https://github.com/SebDufresne/scheduler/blob/master/docs/adaptive-design.png)
 
-### Create short URL
 
-Allows the creation of new short URLs.
+### Details for one URL
 
-!["screen capture of Create New URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/add-appointment.png)
+A list of every visit for a given short URL, sorted by dates, from most recent to oldest.
 
-### Summary page for each URL
-
-Give detailed information about short URL usage, and allows edits to the path given to the shorten version.
-
-!["screen capture of usage summary for a URL and Edit Page"](https://github.com/SebDufresne/scheduler/blob/master/docs/contextual-errors.png)
+!["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/transition-states.png)
 
 ### Summary of all short URLs
 
@@ -28,19 +41,16 @@ List all the short URLs for a given user.
 
 !["screen capture of Summary of all short URLs"](https://github.com/SebDufresne/scheduler/blob/master/docs/deletion-confirmation.png)
 
-### Details for one URL
-
-A list of every visit for a given short URL, sorted by dates, from most recent to oldest.
-
 !["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/error-handling.png)
 
-!["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/main-view.png)
+### Summary page for each URL
 
+Give detailed information about short URL usage, and allows edits to the path given to the shorten version.
 
 !["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/mockup-storybook.png)
 !["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/tests-cypress.png)
 !["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/tests-jest.png)
-!["screen capture of details for one URL"](https://github.com/SebDufresne/scheduler/blob/master/docs/transition-states.png)
+
 
 ## Dependencies
 
