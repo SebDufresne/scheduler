@@ -84,7 +84,7 @@ describe('Appointment', () => {
       queryByText(day, 'Monday')
     );
 
-    expect(getByText(day, 'no spots remaining')).toBeInTheDocument();
+    expect(getByText(day, '5 spots remaining')).toBeInTheDocument();
   });
 
   it('4. loads data, cancels an interview and increases the spots remaining for Monday by 1', async () => {
