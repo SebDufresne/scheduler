@@ -1,8 +1,5 @@
 import {
-  reducer,
-  SET_APPLICATION_DATA,
-  SET_DAY,
-  SET_INTERVIEW
+  reducer
 } from 'reducers/application';
 
 describe("Application Reducer", () => {

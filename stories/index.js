@@ -23,6 +23,55 @@ import Status from 'components/Appointment/Status';
 
 import { getSpotsForDay } from 'helpers/selectors';
 
+const appointments = {
+  '1': { id: 1, time: '12pm', interview: null },
+  '2': { id: 2, time: '1pm', interview: null },
+  '3': {
+    id: 3,
+    time: '2pm',
+    interview: { student: 'Archie Cohen', interviewer: 2 }
+  },
+  '4': {
+    id: 4,
+    time: '3pm',
+    interview: { student: 'Chad Takahashi', interviewer: 2 }
+  },
+  '5': {
+    id: 5,
+    time: '4pm',
+    interview: { student: 'Chad Takahashi', interviewer: 2 }
+  }
+};
+
+const days = [
+  {
+    id: 1,
+    name: 'Monday',
+    appointments: [1, 2, 3],
+    interviewers: [1, 3, 4]
+  },
+  {
+    id: 2,
+    name: 'Tuesday',
+    appointments: [4, 5],
+    interviewers: [3, 5]
+  }
+];
+
+const interviewer = {
+  id: 1,
+  name: 'Sylvia Palmer',
+  avatar: 'https://i.imgur.com/LpaY82x.png'
+};
+
+const interviewers = [
+  { id: 1, name: 'Sylvia Palmer', avatar: 'https://i.imgur.com/LpaY82x.png' },
+  { id: 2, name: 'Tori Malcolm', avatar: 'https://i.imgur.com/Nmx0Qxo.png' },
+  { id: 3, name: 'Mildred Nazir', avatar: 'https://i.imgur.com/T2WwVfS.png' },
+  { id: 4, name: 'Cohana Roy', avatar: 'https://i.imgur.com/FK8V841.jpg' },
+  { id: 5, name: 'Sven Jones', avatar: 'https://i.imgur.com/twYrpay.jpg' }
+];
+
 storiesOf('Button', module)
   .addParameters({
     backgrounds: [{ name: 'dark', value: '#222f3e', default: true }]
@@ -50,21 +99,6 @@ storiesOf('DayListItem', module)
     <DayListItem name="Tuesday" setDay={action('setDay')} spots={5} />
   ));
 
-const days = [
-  {
-    id: 1,
-    name: 'Monday',
-    appointments: [1, 2, 3],
-    interviewers: [1, 3, 4]
-  },
-  {
-    id: 2,
-    name: 'Tuesday',
-    appointments: [4, 5],
-    interviewers: [3, 5]
-  }
-];
-
 storiesOf('DayList', module)
   .addParameters({
     backgrounds: [{ name: 'dark', value: '#222f3e', default: true }]
@@ -87,12 +121,6 @@ storiesOf('DayList', module)
       appointments={appointments}
     />
   ));
-
-const interviewer = {
-  id: 1,
-  name: 'Sylvia Palmer',
-  avatar: 'https://i.imgur.com/LpaY82x.png'
-};
 
 storiesOf('InterviewerListItem', module)
   .addParameters({
@@ -122,14 +150,6 @@ storiesOf('InterviewerListItem', module)
     />
   ));
 
-const interviewers = [
-  { id: 1, name: 'Sylvia Palmer', avatar: 'https://i.imgur.com/LpaY82x.png' },
-  { id: 2, name: 'Tori Malcolm', avatar: 'https://i.imgur.com/Nmx0Qxo.png' },
-  { id: 3, name: 'Mildred Nazir', avatar: 'https://i.imgur.com/T2WwVfS.png' },
-  { id: 4, name: 'Cohana Roy', avatar: 'https://i.imgur.com/FK8V841.jpg' },
-  { id: 5, name: 'Sven Jones', avatar: 'https://i.imgur.com/twYrpay.jpg' }
-];
-
 storiesOf('InterviewerList', module)
   .addParameters({
     backgrounds: [{ name: 'dark', value: '#222f3e', default: true }]
@@ -147,26 +167,6 @@ storiesOf('InterviewerList', module)
       onChange={action('onChange')}
     />
   ));
-
-const appointments = {
-  '1': { id: 1, time: '12pm', interview: null },
-  '2': { id: 2, time: '1pm', interview: null },
-  '3': {
-    id: 3,
-    time: '2pm',
-    interview: { student: 'Archie Cohen', interviewer: 2 }
-  },
-  '4': {
-    id: 4,
-    time: '3pm',
-    interview: { student: 'Chad Takahashi', interviewer: 2 }
-  },
-  '5': {
-    id: 5,
-    time: '4pm',
-    interview: { student: 'Chad Takahashi', interviewer: 2 }
-  }
-};
 
 storiesOf('Appointment', module)
   .addParameters({

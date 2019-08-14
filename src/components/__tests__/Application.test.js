@@ -26,7 +26,7 @@ import {
 */
 import Application from 'components/Application';
 
-import axios from "axios";
+import axios from 'axios';
 
 afterEach(cleanup);
 
@@ -102,16 +102,18 @@ describe('Appointment', () => {
     fireEvent.click(queryByAltText(appointment, 'Delete'));
 
     // 4. Check that the confirmation message is shown.
-    expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
+    expect(
+      getByText(appointment, 'Are you sure you would like to delete?')
+    ).toBeInTheDocument();
 
     // 5. Click the "Confirm" button on the confirmation.
     fireEvent.click(getByText(appointment, 'Confirm'));
 
     // 6. Check that the element with the text "Deleting" is displayed.
-    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+    expect(getByText(appointment, 'Deleting')).toBeInTheDocument();
 
     // 7. Wait until the element with the "Add" button is displayed.
-    await waitForElement(() => getByAltText(appointment, "Add"));
+    await waitForElement(() => getByAltText(appointment, 'Add'));
 
     // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
     const day = getAllByTestId(container, 'day').find(day =>
@@ -137,7 +139,6 @@ describe('Appointment', () => {
 
     fireEvent.click(queryByAltText(appointment, 'Edit'));
 
-
     // 4. Target the field with enter student name
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: 'Lydia Miller-Jones' }
@@ -156,12 +157,12 @@ describe('Appointment', () => {
     const day = getAllByTestId(container, 'day').find(day =>
       queryByText(day, 'Monday')
     );
-    
+
     // 9. Make sure that the amount of spots is still at one
     expect(getByText(day, '1 spot remaining')).toBeInTheDocument();
   });
 
-  it("6. shows the save error when failing to save an appointment", async () => {
+  it('6. shows the save error when failing to save an appointment', async () => {
     // Setting: Fake an error with axios (once)
     axios.put.mockRejectedValueOnce();
 
@@ -191,36 +192,42 @@ describe('Appointment', () => {
     expect(getByText(appointment, 'Saving')).toBeInTheDocument();
 
     // 8. An error should be rendered.
-    await waitForElement(() => getByText(appointment, "Could not save appointment."));
+    await waitForElement(() =>
+      getByText(appointment, 'Could not save appointment.')
+    );
   });
 
-  it("7. shows the delete error when failing to delete an existing appointment", async () => {
+  it('7. shows the delete error when failing to delete an existing appointment', async () => {
     // Setting: Fake an error with axios (once)
     axios.delete.mockRejectedValueOnce();
- 
+
     // 1. Render the Application.
     const { container } = render(<Application />);
 
     // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, 'Archie Cohen'));
-    
+
     // 3. Click the "Delete" button on the booked appointment.
     const appointment = getAllByTestId(container, 'appointment').find(
       appointment => queryByText(appointment, 'Archie Cohen')
     );
-    
+
     fireEvent.click(queryByAltText(appointment, 'Delete'));
-    
+
     // 4. Check that the confirmation message is shown.
-    expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
-    
+    expect(
+      getByText(appointment, 'Are you sure you would like to delete?')
+    ).toBeInTheDocument();
+
     // 5. Click the "Confirm" button on the confirmation.
     fireEvent.click(getByText(appointment, 'Confirm'));
-    
+
     // 6. Check that the element with the text "Deleting" is displayed.
-    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+    expect(getByText(appointment, 'Deleting')).toBeInTheDocument();
 
     // 7. An error should be rendered.
-    await waitForElement(() => getByText(appointment, "Could not delete appointment."));
+    await waitForElement(() =>
+      getByText(appointment, 'Could not delete appointment.')
+    );
   });
 });
