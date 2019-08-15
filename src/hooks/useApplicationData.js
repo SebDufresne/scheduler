@@ -57,7 +57,7 @@ export default function useApplicationData() {
   // sends the info to dispatch to update the state
   const bookInterview = function(id, interview) {
     return axios
-      .put(`http://localhost:3001/api/appointments/${id}`, { interview })
+      .put(`/api/appointments/${id}`, { interview })
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview });
       });
@@ -67,7 +67,7 @@ export default function useApplicationData() {
   // sends the info to dispatch to update the state
   const cancelInterview = function(id) {
     return axios
-      .delete(`http://localhost:3001/api/appointments/${id}`)
+      .delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview: null });
       });
